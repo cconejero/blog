@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -14,6 +15,14 @@ class Post extends Model
     protected $guarded = [];
 
     protected $with = ['category', 'author'];
+
+    public function scopeFilter($query, array $filters){
+
+        $query->when($filters['search'] ?? false, fn ($query, $search) =>
+            $query
+                ->where('title', 'like', '%' . $search . '%')
+                ->orWhere('title', 'like', '%' . $search . '%'));
+    }
 
     public function category(){
         return $this->belongsTo(Category::class);
