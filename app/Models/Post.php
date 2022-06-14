@@ -11,9 +11,7 @@ class Post extends Model
 
 //    protected $fillable = ['title', 'slug', 'excerpt', 'body', 'category_id'];
 
-    protected $guarded = [];
-
-    protected $with = ['category', 'author'];
+    protected $with = ['category', 'author', 'comments'];
 
     /**
      * @param $query
@@ -39,6 +37,10 @@ class Post extends Model
             $query->whereHas('author', fn($query) =>
                 $query->where('username', $author))
         );
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 
     public function category(){
