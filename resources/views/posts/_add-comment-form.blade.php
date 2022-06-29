@@ -13,19 +13,18 @@
             </header>
 
             <div class="mt-6">
-
-                                    <textarea name="body"
-                                              class="w-full text-xs focus:outline-none focus:ring"
-                                              rows="5"
-                                              placeholder="Quick, think something to say!"
-                                              required></textarea>
+                <textarea class="w-full text-xs focus:outline-none focus:ring"
+                          name="body"
+                          placeholder="Quick, think something to say!"
+                          required
+                          rows="5"></textarea>
                 @error('body')
                 <span class="text-xs text-red-500">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="flex justify-end mt-6 pt-6 border-t border-gray-200">
-                <x-submit-button>Post</x-submit-button>
+                <x-form.button>Post</x-form.button>
             </div>
         </form>
     </x-panel>
