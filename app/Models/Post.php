@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Category|null $category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
  * @property-read int|null $comments_count
+ *
  * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post filter(array $filters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
@@ -49,39 +50,35 @@ class Post extends Model
 
     /**
      * @param $query
-     * @param array $filters
+     * @param  array  $filters
      * @return void
      */
     public function scopeFilter($query, array $filters): void
     {
-
-        $query->when($filters['search'] ?? false, fn ($query, $search) =>
-            $query->where(fn($query) =>
-                $query->where('title', 'like', '%' . $search . '%')
-                ->orWhere('body', 'like', '%' . $search . '%')
+        $query->when($filters['search'] ?? false, fn ($query, $search) => $query->where(fn ($query) => $query->where('title', 'like', '%'.$search.'%')
+                ->orWhere('body', 'like', '%'.$search.'%')
             )
         );
 
-        $query->when($filters['category'] ?? false, fn ($query, $category) =>
-            $query->whereHas('category', fn($query) =>
-                $query->where('slug', $category))
+        $query->when($filters['category'] ?? false, fn ($query, $category) => $query->whereHas('category', fn ($query) => $query->where('slug', $category))
         );
 
-        $query->when($filters['author'] ?? false, fn ($query, $author) =>
-            $query->whereHas('author', fn($query) =>
-                $query->where('username', $author))
+        $query->when($filters['author'] ?? false, fn ($query, $author) => $query->whereHas('author', fn ($query) => $query->where('username', $author))
         );
     }
 
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function author(){
+    public function author()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 }

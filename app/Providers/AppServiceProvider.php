@@ -24,10 +24,10 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
 
-        app()->bind(Newsletter::class, function (){
+        app()->bind(Newsletter::class, function () {
             $client = (new ApiClient())->setConfig([
                 'apiKey' => config('services.mailchimp.key'),
-                'server' => 'us14'
+                'server' => 'us14',
             ]);
 
             return new MailchimpNewsletter($client);
@@ -43,11 +43,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
 
-        Gate::define('admin', function (User $user){
-            return $user->username === 'cconejero';
+        Gate::define('admin', function (User $user) {
+            return $user->username === 'admin';
         });
 
-        Blade::if('admin', function (){
+        Blade::if('admin', function () {
             return request()->user()?->can('admin');
         });
     }
