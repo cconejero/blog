@@ -13,6 +13,7 @@ npm -v  // 8.14.0
 cp .env.example .env
 composer install
 npm install
+php artisan storage:link
 php artisan migrate:fresh --seed
 ```
 
