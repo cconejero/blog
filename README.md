@@ -18,7 +18,7 @@ php artisan migrate:fresh --seed
 ```
 
 ## Default credentials
-**User:** admin
+**User:** admin@example.com
 
 **Password:** password
 
